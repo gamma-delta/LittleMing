@@ -6,7 +6,7 @@ windows :
 	GOOS=windows GOARCH=amd64 go build -v -o='little_ming.exe'
 
 mac :
-	GOOS=darwin GOARCH=amd64 go build -v -o='little_ming'
+	GOOS=darwin GOARCH=amd64 go build -v -o='little_ming_mac'
 
 linux :
-	GOOS=linux GOARCH=amd64 go build -v -o='little_ming'
+	GOOS=linux GOARCH=amd64 go build -v -o='little_ming_linux'
