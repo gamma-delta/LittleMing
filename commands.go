@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"time"
+	"strings"
 )
 
 var commandRouter = map[string]func(arg string, u *user, send func(string)){
+	"help": cmdHelp,
 	"addname": cmdAddName,
 	"removename": cmdRemoveName,
 	"listnames": cmdListNames,
@@ -13,6 +15,21 @@ var commandRouter = map[string]func(arg string, u *user, send func(string)){
 	"stop": cmdStop,
 	"frequency": cmdFrequency,
 	"whatfrequency": cmdWhatFrequency,
+}
+
+//yes yes I know no underscores in variable names
+var _help = strings.ReplaceAll(`**Commands**
+> - "~help": Get this list.
+> - "~addname [name]": Add "name" to your list of chosen names.
+> - "~removename [name]": Remove "name" from your list of chosen names.
+> - "~listnames": Get a list of all your chosen names.
+> - "~start": Start sending you messages.
+> - "~stop": Stop sending you messages.
+> - "~frequency [duration]": Set the average frequency of the message to "duration". Messages will be sent within a quarter of that time period (so if you set this to 2 hours, the time between messages will be between 1.5 hours and 2.5 hours.)
+> - "~whatfrequency": Get the frequency of the message.`, "\"", "`") //please no annoying ```"`"+"`"` stuff
+
+func cmdHelp(_ string, _ *user, send func(string)) {
+	send(_help)
 }
 
 func cmdAddName(name string, u *user, send func(string)) {

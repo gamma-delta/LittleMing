@@ -6,7 +6,7 @@ This bot will send you a short DM every few hours with a wholesome message using
 
 ## Commands
 
-- `help`: Get this list.
+- `~help`: Get this list.
 - `~addname [name]`: Add `name` to your list of chosen names.
 - `~removename [name]`: Remove `name` from your list of chosen names.
 - `~listnames`: Get a list of all your chosen names.
