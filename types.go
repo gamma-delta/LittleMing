@@ -11,6 +11,7 @@ import (
 type littleming struct {
 	Users   map[string]*user //map discord ID to user
 	Discord *discordgo.Session
+	Messages []string
 }
 
 //one person using the bot
@@ -29,7 +30,9 @@ func (u *user) SetupTimer() {
 	freq := int64(u.Frequency)
 	duration := time.Duration(freq + rand.Int63n(freq / 2) - freq / 4)
 	u.Timer = time.AfterFunc(duration, func() {
-		ming.Discord.ChannelMessageSend(u.DMChannelID, fmt.Sprintf(possibleNameMessages[rand.Intn(len(possibleNameMessages))], u.Names[rand.Intn(len(u.Names))]))
-		u.SetupTimer()
+		ming.Discord.ChannelMessageSend(u.DMChannelID, fmt.Sprintf(
+			ming.Messages[rand.Intn(len(ming.Messages))], 
+			u.Names[rand.Intn(len(u.Names))]))
+		u.SetupTimer() //call itself again.
 	})
 }

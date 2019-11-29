@@ -9,20 +9,24 @@ import (
 	"syscall"
 	"io/ioutil"
 	"encoding/json"
+	"strings"
 
 	"github.com/bwmarrin/discordgo"
 )
 
 var ming *littleming
 var saveFile = "data.json"
+var messagesFile = "messages.txt"
 
 func main() {
 	log.Println("Started...")
 
+	//Init ming
 	ming = &littleming{
 		Users: make(map[string]*user),
 	}
 
+	//Get saved users
 	saveJSON, err := ioutil.ReadFile(saveFile)
 	if err == nil {
 		log.Println("Reading save file...")
@@ -34,6 +38,14 @@ func main() {
 		log.Println("No save file found.")
 	}
 
+	//Get messages
+	messagesBytes, err := ioutil.ReadFile(messagesFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	ming.Messages = strings.Split(string(messagesBytes), "\n")
+
+	//Connect to discord
 	ming.Discord, err = discordgo.New("Bot " + superSecretBotKey)
 	if err != nil {
 		log.Fatal(err)
